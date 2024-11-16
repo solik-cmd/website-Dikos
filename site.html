@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIKOS</title>
+    <style>
+        /* Сброс стандартных отступов и стилей */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Фон для всей страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #f8b7d1, #a8c0ff); /* Приятный градиентный фон */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            color: #333;
+            overflow: hidden; /* Чтобы квадратики не выходили за пределы экрана */
+        }
+
+        /* Верхняя полоска с текстом */
+        h1 {
+            background-color: black;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 3rem;
+            margin-bottom: 50px;
+        }
+
+        /* Контейнер для картинок */
+        .image-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Стиль для квадратиков */
+        .image-box {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        /* Стиль для картинок */
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Эффект при наведении на картинку */
+        .image-box:hover {
+            transform: scale(1.1);
+        }
+
+        /* Анимация при клике */
+        @keyframes fly-away {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2) translate(2000px, -2000px);
+                opacity: 0;
+            }
+        }
+
+        /* Классы для анимации */
+        .fly-away {
+            animation: fly-away 2s forwards;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Верхняя полоска с текстом -->
+    <h1>DIKOS</h1>
+
+    <!-- Контейнер для картинок -->
+    <div class="image-container">
+        <!-- Первая картинка -->
+        <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/index/')">
+            <img src="Seif.jpg" alt="Image 1">
+        </div>
+
+        <!-- Вторая картинка -->
+        <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://example2.com')">
+            <img src="images/image2.jpg" alt="Image 2">
+        </div>
+
+        <!-- Третья картинка -->
+        <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://example3.com')">
+            <img src="images/image3.jpg" alt="Image 3">
+        </div>
+    </div>
+
+    <script>
+        // Функция для запуска анимации "улетающих" квадратиков и перехода по ссылке
+        function flyAwayAndRedirect(element, url) {
+            // Запуск анимации
+            element.classList.add('fly-away');
+
+            // Через 2 секунды (время анимации) перенаправляем на сайт
+            setTimeout(function() {
+                window.location.href = url;
+            }, 2000); // Задержка в 2 секунды для завершения анимации
+        }
+    </script>
+
+</body>
+</html>
