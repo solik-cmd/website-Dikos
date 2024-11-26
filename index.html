@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIKOS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet"> <!-- Подключение шрифта Jaro -->
     <style>
         /* Сброс стандартных отступов и стилей */
         * {
@@ -14,7 +15,7 @@
 
         /* Фон для всей страницы */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Julius Sans One', sans-serif; /* Используем шрифт Jaro */
             background: linear-gradient(45deg, #f8b7d1, #a8c0ff); /* Приятный градиентный фон */
             height: 100vh;
             display: flex;
@@ -23,23 +24,62 @@
             flex-direction: column;
             text-align: center;
             color: #333;
-            overflow: hidden; /* Чтобы квадратики не выходили за пределы экрана */
+            overflow: hidden;
         }
 
         /* Верхняя полоска с текстом */
-        h1 {
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             background-color: black;
             color: white;
             padding: 20px;
             border-radius: 5px;
             font-size: 3rem;
-            margin-bottom: 50px;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 1;
+            animation: flyAwayUp 4s forwards; /* Анимация появления и исчезновения */
+        }
+
+        /* Текст 1.1 рядом с DIKOS */
+        .header span {
+            font-size: 2rem;
+            animation: fadeIn 3s forwards; /* Анимация для 1.1 */
+        }
+
+        /* Анимация для исчезновения и перемещения DIKOS вверх */
+        @keyframes flyAwayUp {
+            0% {
+                transform: translate(-50%, 0); /* Начальная позиция */
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -150%) scale(0.5); /* Перемещаем в верхнюю часть и уменьшаем */
+                opacity: 0; /* Окно исчезает */
+            }
+        }
+
+        /* Анимация появления для 1.1 */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Контейнер для картинок */
         .image-container {
             display: flex;
             gap: 20px;
+            opacity: 0;
+            animation: fadeInImages 2s forwards 4s; /* Анимация появления картинок с задержкой */
         }
 
         /* Стиль для квадратиков */
@@ -66,7 +106,22 @@
             transform: scale(1.1);
         }
 
-        /* Анимация при клике */
+        /* Анимация для картинок */
+        @keyframes fadeInImages {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Анимация появления окон */
+        .fly-away {
+            animation: fly-away 2s forwards;
+        }
+
+        /* Ключевые кадры для анимации улетающих окон */
         @keyframes fly-away {
             0% {
                 transform: scale(1) translate(0, 0);
@@ -78,17 +133,15 @@
             }
         }
 
-        /* Классы для анимации */
-        .fly-away {
-            animation: fly-away 2s forwards;
-        }
-
     </style>
 </head>
 <body>
 
-    <!-- Верхняя полоска с текстом -->
-    <h1>DIKOS</h1>
+    <!-- Окно с текстом DIKOS и 1.1 -->
+    <div class="header">
+        DIKOS
+        <span>1.1</span> <!-- Текст 1.1 рядом с DIKOS -->
+    </div>
 
     <!-- Контейнер для картинок -->
     <div class="image-container">
@@ -101,6 +154,7 @@
         <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/dino_game.html/')">
             <img src="dino.jpg" alt="Image 2">
         </div>
+
         <!-- Третья картинка -->
         <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/istory/')">
             <img src="hystore (1).jpg" alt="Image 3">
