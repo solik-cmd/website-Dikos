@@ -27,7 +27,7 @@
             overflow: hidden;
         }
 
-        /* Верхняя полоска с текстом */
+        /* Верхняя полоска с текстом DIKOS */
         .header {
             display: flex;
             align-items: center;
@@ -39,38 +39,32 @@
             border-radius: 5px;
             font-size: 3rem;
             position: absolute;
-            top: 20%;
+            top: 0;
             left: 50%;
             transform: translateX(-50%);
             opacity: 1;
-            animation: flyAwayUp 4s forwards; /* Анимация появления и исчезновения */
+            animation: slideDown 3s forwards; /* Анимация появления и исчезновения текста DIKOS */
         }
 
-        /* Текст 1.1 рядом с DIKOS */
+        /* Текст 1.1 */
         .header span {
-            font-size: 2rem;
-            animation: fadeIn 3s forwards; /* Анимация для 1.1 */
+            font-size: 1.5rem; /* Размер шрифта для 1.1 */
+            font-weight: normal;
         }
 
-        /* Анимация для исчезновения и перемещения DIKOS вверх */
-        @keyframes flyAwayUp {
+        /* Анимация появления текста DIKOS */
+        @keyframes slideDown {
             0% {
-                transform: translate(-50%, 0); /* Начальная позиция */
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -150%) scale(0.5); /* Перемещаем в верхнюю часть и уменьшаем */
-                opacity: 0; /* Окно исчезает */
-            }
-        }
-
-        /* Анимация появления для 1.1 */
-        @keyframes fadeIn {
-            0% {
+                top: -100px;
                 opacity: 0;
             }
-            100% {
+            50% {
+                top: 20%;
                 opacity: 1;
+            }
+            100% {
+                top: -100px;
+                opacity: 0;
             }
         }
 
@@ -79,7 +73,7 @@
             display: flex;
             gap: 20px;
             opacity: 0;
-            animation: fadeInImages 2s forwards 4s; /* Анимация появления картинок с задержкой */
+            animation: fadeInImages 2s forwards 3s; /* Анимация появления картинок с задержкой */
         }
 
         /* Стиль для квадратиков */
@@ -106,7 +100,7 @@
             transform: scale(1.1);
         }
 
-        /* Анимация для картинок */
+        /* Анимация появления картинок */
         @keyframes fadeInImages {
             0% {
                 opacity: 0;
@@ -116,7 +110,7 @@
             }
         }
 
-        /* Анимация появления окон */
+        /* Анимация для картинок при нажатии */
         .fly-away {
             animation: fly-away 2s forwards;
         }
@@ -139,8 +133,7 @@
 
     <!-- Окно с текстом DIKOS и 1.1 -->
     <div class="header">
-        DIKOS
-        <span>1.1</span> <!-- Текст 1.1 рядом с DIKOS -->
+        DIKOS <span>1.1</span>
     </div>
 
     <!-- Контейнер для картинок -->
@@ -158,6 +151,11 @@
         <!-- Третья картинка -->
         <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/istory/')">
             <img src="hystore (1).jpg" alt="Image 3">
+        </div>
+
+        <!-- Четвертая картинка (новая) -->
+        <div class="click.jpg" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/sda/')">
+            <img src="" alt="Image 4">
         </div>
     </div>
 
