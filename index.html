@@ -91,7 +91,33 @@
             color: #fff;
             padding: 10px 20px;
             border-radius: 5px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .bug-report-form {
             display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+        }
+
+        .bug-report-form textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .bug-report-form button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
             cursor: pointer;
         }
     </style>
@@ -125,7 +151,12 @@
         <label>Фоновое изображение: <input type="file" id="bg-image-picker" accept="image/*"></label>
     </div>
 
-    <button id="bug-report-button" class="bug-report" onclick="reportBug()">Сообщить о баге</button>
+    <button id="bug-report-button" class="bug-report" onclick="toggleBugReportForm()">Сообщить о баге</button>
+
+    <div class="bug-report-form" id="bug-report-form">
+        <textarea id="bug-message" placeholder="Опишите баг..."></textarea><br>
+        <button onclick="submitBugReport()">Отправить</button>
+    </div>
 
     <div>
         <input type="password" id="admin-code" placeholder="Введите код для админа">
@@ -177,6 +208,35 @@
         window.onload = function() {
             checkRole();
         };
+
+        // Показать форму для отправки баг-репорта
+        function toggleBugReportForm() {
+            const form = document.getElementById('bug-report-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Отправить баг-репорт и сохранить его
+        function submitBugReport() {
+            const message = document.getElementById('bug-message').value;
+            if (message.trim() === "") {
+                alert('Пожалуйста, опишите баг.');
+                return;
+            }
+
+            const role = getCookie("role") || "guest"; // Получаем роль пользователя, если она есть
+            const bugReport = { message, role };
+
+            // Сохраняем баг-репорт в localStorage
+            let bugReports = JSON.parse(localStorage.getItem('bugReports')) || [];
+            bugReports.push(bugReport);
+            localStorage.setItem('bugReports', JSON.stringify(bugReports));
+
+            alert('Ваш баг был отправлен!');
+
+            // Очищаем форму
+            document.getElementById('bug-message').value = '';
+            toggleBugReportForm();
+        }
     </script>
 
 </body>
