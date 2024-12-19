@@ -35,6 +35,7 @@
             width: 100%;
             text-align: center;
             font-size: 1.2rem;
+            display: none;
         }
 
         .image-container {
@@ -120,11 +121,52 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .bug-reports-container {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-height: 400px;
+            overflow-y: auto;
+            width: 300px;
+        }
+
+        .bug-report-item {
+            margin-bottom: 10px;
+        }
+
+        .bug-report-item p {
+            font-size: 0.9rem;
+        }
+
+        .bug-report-item span {
+            display: block;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        .close-bug-reports {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <div id="admin-banner" class="admin-banner" style="display: none;">
+    <div id="admin-banner" class="admin-banner">
         Админ режим активирован
     </div>
 
@@ -158,6 +200,16 @@
         <button onclick="submitBugReport()">Отправить</button>
     </div>
 
+    <!-- Кнопка для просмотра сообщений о баге, доступна только для админов -->
+    <button id="view-bug-reports-button" style="display: none;" onclick="viewBugReports()">Просмотр баг-репортов</button>
+
+    <!-- Контейнер с сообщениями о баге для админов -->
+    <div class="bug-reports-container" id="bug-reports-container">
+        <button class="close-bug-reports" onclick="closeBugReports()">X</button>
+        <h3>Баг-репорты</h3>
+        <div id="bug-reports-list"></div>
+    </div>
+
     <div>
         <input type="password" id="admin-code" placeholder="Введите код для админа">
         <button onclick="checkAdminCode()">Войти</button>
@@ -189,6 +241,7 @@
             const role = getCookie("role");
             if (role === "admin") {
                 document.getElementById('admin-banner').style.display = 'block';
+                document.getElementById('view-bug-reports-button').style.display = 'inline-block'; // Показать кнопку
             }
         }
 
@@ -199,6 +252,7 @@
                 setCookie("role", "admin", 7); // Записываем роль в куки
                 document.getElementById('admin-banner').style.display = 'block';
                 alert('Добро пожаловать, админ!');
+                checkRole(); // Обновляем отображение после входа
             } else {
                 alert('Неверный код!');
             }
@@ -236,6 +290,27 @@
             // Очищаем форму
             document.getElementById('bug-message').value = '';
             toggleBugReportForm();
+        }
+
+        // Функция для просмотра всех баг-репортов
+        function viewBugReports() {
+            const bugReports = JSON.parse(localStorage.getItem('bugReports')) || [];
+            const bugReportsList = document.getElementById('bug-reports-list');
+            bugReportsList.innerHTML = '';
+
+            bugReports.forEach((report, index) => {
+                const bugItem = document.createElement('div');
+                bugItem.classList.add('bug-report-item');
+                bugItem.innerHTML = `<p>${report.message}</p><span>Отправил: ${report.role}</span>`;
+                bugReportsList.appendChild(bugItem);
+            });
+
+            document.getElementById('bug-reports-container').style.display = 'block';
+        }
+
+        // Закрыть контейнер с баг-репортами
+        function closeBugReports() {
+            document.getElementById('bug-reports-container').style.display = 'none';
         }
     </script>
 
