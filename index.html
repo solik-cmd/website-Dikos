@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIKOS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet"> <!-- Подключение шрифта Jaro -->
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet"> 
     <style>
-        /* Сброс стандартных отступов и стилей */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Фон для всей страницы */
         body {
-            font-family: 'Julius Sans One', sans-serif; /* Используем шрифт Jaro */
-            background: linear-gradient(45deg, #f8b7d1, #a8c0ff); /* Приятный градиентный фон */
+            font-family: 'Julius Sans One', sans-serif;
+            background: linear-gradient(45deg, #f8b7d1, #a8c0ff);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -27,7 +25,6 @@
             overflow: hidden;
         }
 
-        /* Верхняя полоска с текстом DIKOS */
         .header {
             display: flex;
             align-items: center;
@@ -43,16 +40,14 @@
             left: 50%;
             transform: translateX(-50%);
             opacity: 1;
-            animation: slideDown 3s forwards; /* Анимация появления и исчезновения текста DIKOS */
+            animation: slideDown 3s forwards;
         }
 
-        /* Текст 1.1 */
         .header span {
-            font-size: 1.5rem; /* Размер шрифта для 1.1 */
+            font-size: 1.5rem;
             font-weight: normal;
         }
 
-        /* Анимация появления текста DIKOS */
         @keyframes slideDown {
             0% {
                 top: -100px;
@@ -68,15 +63,13 @@
             }
         }
 
-        /* Контейнер для картинок */
         .image-container {
             display: flex;
             gap: 20px;
             opacity: 0;
-            animation: fadeInImages 2s forwards 3s; /* Анимация появления картинок с задержкой */
+            animation: fadeInImages 2s forwards 3s;
         }
 
-        /* Стиль для квадратиков */
         .image-box {
             width: 150px;
             height: 150px;
@@ -88,19 +81,16 @@
             transition: transform 0.3s ease;
         }
 
-        /* Стиль для картинок */
         .image-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        /* Эффект при наведении на картинку */
         .image-box:hover {
             transform: scale(1.1);
         }
 
-        /* Анимация появления картинок */
         @keyframes fadeInImages {
             0% {
                 opacity: 0;
@@ -110,12 +100,10 @@
             }
         }
 
-        /* Анимация для картинок при нажатии */
         .fly-away {
             animation: fly-away 2s forwards;
         }
 
-        /* Ключевые кадры для анимации улетающих окон */
         @keyframes fly-away {
             0% {
                 transform: scale(1) translate(0, 0);
@@ -127,49 +115,109 @@
             }
         }
 
+        .settings-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .settings-button:hover {
+            background-color: #555;
+        }
+
+        .settings-menu {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .settings-menu input[type="color"], .settings-menu input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .image-container {
+                flex-direction: column;
+            }
+            .image-box {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Окно с текстом DIKOS и 1.1 -->
     <div class="header">
         DIKOS <span>1.1</span>
     </div>
 
-    <!-- Контейнер для картинок -->
     <div class="image-container">
-        <!-- Первая картинка -->
         <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/index/')">
             <img src="Seif.jpg" alt="Image 1">
         </div>
-
-        <!-- Вторая картинка -->
         <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/dino_game.html/')">
             <img src="dino.jpg" alt="Image 2">
         </div>
-
-        <!-- Третья картинка -->
         <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/istory/')">
             <img src="hystore (1).jpg" alt="Image 3">
         </div>
-
-        <!-- Четвертая картинка (новая) -->
         <div class="image-box" onclick="flyAwayAndRedirect(this, 'https://solik-cmd.github.io/sda/')">
             <img src="click.jpg" alt="Image 4">
         </div>        
     </div>
 
-    <script>
-        // Функция для запуска анимации "улетающих" квадратиков и перехода по ссылке
-        function flyAwayAndRedirect(element, url) {
-            // Запуск анимации
-            element.classList.add('fly-away');
+    <button class="settings-button" onclick="toggleSettingsMenu()">Настройки</button>
 
-            // Через 2 секунды (время анимации) перенаправляем на сайт
+    <div class="settings-menu">
+        <label>Цвет фона: <input type="color" id="bg-color-picker"></label><br>
+        <label>Цвет текста: <input type="color" id="text-color-picker"></label><br>
+        <label>Фоновое изображение: <input type="file" id="bg-image-picker" accept="image/*"></label>
+    </div>
+
+    <script>
+        function flyAwayAndRedirect(element, url) {
+            element.classList.add('fly-away');
             setTimeout(function() {
                 window.location.href = url;
-            }, 2000); // Задержка в 2 секунды для завершения анимации
+            }, 2000);
         }
+
+        function toggleSettingsMenu() {
+            const menu = document.querySelector('.settings-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        document.getElementById('bg-color-picker').addEventListener('input', function(event) {
+            document.body.style.background = event.target.value;
+        });
+
+        document.getElementById('text-color-picker').addEventListener('input', function(event) {
+            document.body.style.color = event.target.value;
+        });
+
+        document.getElementById('bg-image-picker').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.body.style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     </script>
 
 </body>
